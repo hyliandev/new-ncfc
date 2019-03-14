@@ -1,6 +1,8 @@
 <?php
 
 function assocToQueryString($str){
+	global $db;
+	
 	if(is_numeric($str)){
 		$str = $str;
 	}elseif(is_string($str)){

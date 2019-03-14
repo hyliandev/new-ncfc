@@ -3,19 +3,16 @@
 class Model {
 	protected
 		$data,
-		$primary_value
-	;
-	
-	protected static
 		$required_values,
 		$primary_key,
+		$primary_value,
 		$table
 	;
 	
 	public function __construct($table, $primary_key, $primary_value = false, $required_values = []){
-		static::$table = $table;
+		$this->table = $table;
 		
-		static::$primary_key = $primary_key;
+		$this->primary_key = $primary_key;
 		
 		$this->data = [];
 		
@@ -25,7 +22,7 @@ class Model {
 			$this->Load();
 		}
 		
-		static::$required_values = $required_values;
+		$this->$required_values = $required_values;
 	}
 	
 	public static function Delete($table, $primary_key, $primary_value){
@@ -48,7 +45,9 @@ class Model {
 		return $ret;
 	}
 	
-	public static function FetchQuery($primary_key, $_where = [], $_limit = false, $page = 1){
+	public static function FetchQuery($table, $primary_key, $_where = [], $_limit = false, $page = 1){
+		global $db;
+		
 		$where = [];
 		
 		foreach($_where as $key => $value){
@@ -65,15 +64,23 @@ class Model {
 			$limit = " LIMIT ";
 			
 			if($page > 1){
-				$limit .= ($_limit * ($page - 1));
+				$limit .= ($_limit * ($page - 1)) . ",";
 			}
 			
 			$limit .= " " . $_limit;
 		}
 		
-		$sql = "SELECT " . $primary_key . " FROM " . static::$table . " WHERE " . implode(' AND ', $where) . $limit;
+		$sql = "SELECT " . $primary_key . " FROM " . $table . (!empty($where) ? " WHERE " . implode(' AND ', $where) : '') . $limit;
 		
-		die($sql);
+		$query = $db->query($sql);
+		
+		$IDs = [];
+		
+		while($row = $db->fetch_array($query)){
+			$IDs[] = $row['pid'];
+		}
+		
+		return static::FetchIDs($IDs);
 	}
 	
 	public function Destroy(){
@@ -92,6 +99,7 @@ class Model {
 		global $db;
 		
 		if(empty($this->primary_key) || empty($this->primary_value)){
+			die('fake');
 			return false;
 		}
 		
