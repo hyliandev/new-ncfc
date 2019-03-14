@@ -1,5 +1,17 @@
 <?php
 
+/**
+ * Nintendo Community Fangame Convention
+ * Mainsite Software
+ * Developed by HylianDev
+ * Public Domain for anything not included in MyBB
+ */
+
+// Our fatal error handler
+// Outputs errors to a file here called "error_log"
+// This could be somewhere else, but I shoved it here because:
+// This function simply *must* work under any circumstances
+// It can't depend on a file include or anything!
 function Fatality($e){
 	http_response_code(500);
 	
@@ -26,11 +38,12 @@ function Fatality($e){
 	die();
 }
 
-// Requires
+// Some basic requries
 foreach([
-	'./inc/mybb.php',
+	'./models/Model.php',
+	'./models/NewsPost.php',
 	'./inc/routes.php',
-	'./inc/models.php',
+	'./inc/mybb.php',
 ] as $file){
 	if(!file_exists($file)){
 		Fatality('File not found: ' . $file);
@@ -42,17 +55,20 @@ foreach([
 // Get MyBB
 require_once MYBB_ROOT . 'global.php';
 
-$plugins->run_hooks('forumdisplay_start');
-$plugins->run_hooks('forumdisplay_end');
+// Execute all of our code; this is a rabbit hole to the rest of the files
+require_once 'getRoute.php';
 
+// Parse the forum properly
 eval("\$forums = \"" . $templates->get("forumdisplay") . "\";");
 
+// Add our content to the forum's output
 $forums = explode('<!--content-->', $forums);
-$forums = implode('<!--content-->' . $content, [
+$forums = implode('<!--content--><div id="container">' . $content . '</div>', [
 	array_shift($forums),
 	array_pop($forums)
 ]);
 
+// Display the page properly
 output_page($forums);
 
 ?>
