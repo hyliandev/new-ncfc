@@ -2,13 +2,13 @@
 
 $routes = [
 	'index' => function(){
-		$model = new Model('mybb_posts', 'pid', 1);
+		//$model = new Model('mybb_posts', 'pid', 1);
 		
-		$model->Destroy();
+		$result = NewsPost::FetchQuery('pid');
 		
-		$model->Save();
+		die('<pre>' . print_r($result, true) . '</pre>');
 		
-		//return 'Hello, World!';
+		return 'Hello, World!';
 	},
 	
 	'404' => function(){
