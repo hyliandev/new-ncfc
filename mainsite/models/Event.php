@@ -9,7 +9,17 @@ class Event extends Model {
 	}
 	
 	public static function Current(){
+		global $db;
 		
+		$query = $db->query("SELECT eid FROM ncfc_events WHERE begin_date < " . time() . " AND end_date > " . time() . " LIMIT 1;");
+		
+		$query = $db->fetch_array($query);
+		
+		if(empty($query['eid'])){
+			return false;
+		}
+		
+		return new Event($query['eid']);
 	}
 }
 

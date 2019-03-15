@@ -2,6 +2,8 @@
 
 $routes = [
 	'index' => function(){
+		die(debug(Event::Current()));
+		
 		$post = new NewsPost(1);
 		$author = $post->Author();
 		
