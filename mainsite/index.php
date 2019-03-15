@@ -43,6 +43,7 @@ function Fatality($e){
 foreach([
 	'./models/Model.php',
 	'./models/NewsPost.php',
+	'./models/User.php',
 	'./inc/functions.php',
 	'./inc/routes.php',
 	'./inc/mybb.php',

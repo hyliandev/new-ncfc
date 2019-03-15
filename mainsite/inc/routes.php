@@ -2,7 +2,10 @@
 
 $routes = [
 	'index' => function(){
-		return 'Hello, World!';
+		$post = new NewsPost(1);
+		$author = $post->Author();
+		
+		return '<h1>' . $post->Get('subject') . '</h1><h2>By ' . $author->Get('username') . '</h2>' . $post->Get('message');
 	},
 	
 	'404' => function(){

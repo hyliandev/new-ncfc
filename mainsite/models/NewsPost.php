@@ -1,7 +1,7 @@
 <?php
 
 class NewsPost extends Model {
-	public function __construct($id){
+	public function __construct($id = false){
 		parent::__construct('mybb_posts', 'pid', $id, [
 			'tid',
 			'fid',
@@ -21,9 +21,7 @@ class NewsPost extends Model {
 			return false;
 		}
 		
-		return $this->Get('uid');
-		
-		// return new User($this->data['uid']);
+		return new User($this->Get('uid'));
 	}
 }
 
