@@ -45,8 +45,16 @@ class Model {
 		return $ret;
 	}
 	
-	public static function FetchQuery($table, $primary_key, $_where = [], $_limit = false, $page = 1){
+	public static function FetchQuery($table, $primary_key, $_where = [], $_limit = false, $page = 1, $orderDesc = true, $orderBy = false){
 		global $db;
+		
+		if($orderBy === false){
+			$orderBy = $primary_key;
+		}
+		
+		$orderDesc = $orderDesc ? 'DESC' : 'ASC';
+		
+		$order = " ORDER BY $orderBy $orderDesc ";
 		
 		$where = [];
 		
@@ -70,7 +78,7 @@ class Model {
 			$limit .= " " . $_limit;
 		}
 		
-		$sql = "SELECT " . $primary_key . " FROM " . $table . (!empty($where) ? " WHERE " . implode(' AND ', $where) : '') . $limit;
+		$sql = "SELECT " . $primary_key . " FROM " . $table . (!empty($where) ? " WHERE " . implode(' AND ', $where) : '') . $order . $limit;
 		
 		$query = $db->query($sql);
 		

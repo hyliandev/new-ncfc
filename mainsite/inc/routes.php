@@ -2,12 +2,9 @@
 
 $routes = [
 	'index' => function(){
-		die(debug(Event::Current()));
-		
-		$post = new NewsPost(1);
-		$author = $post->Author();
-		
-		return '<h1>' . $post->Get('subject') . '</h1><h2>By ' . $author->Get('username') . '</h2>' . $post->Get('message');
+		return view('news/archive', [
+			'posts' => NewsPost::FetchQuery('mybb_posts', 'pid', [ 'fid' => 2, ], 2),
+		]);
 	},
 	
 	'404' => function(){

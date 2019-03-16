@@ -24,4 +24,20 @@ function debug(){
 	return ob_get_clean();
 }
 
+function urlForum(){
+	if($_SERVER['HTTP_HOST'] == 'nintendocfc.com'){
+		return 'http://forum.nintendocfc.com';
+	}
+	
+	return 'http://php56.example.com/ncfc/forums';
+}
+
+function urlMainsite(){
+	if($_SERVER['HTTP_HOST'] == 'nintendocfc.com'){
+		return 'http://nintendocfc.com';
+	}
+	
+	return 'http://php56.example.com/ncfc/mainsite';
+}
+
 ?>

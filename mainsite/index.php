@@ -48,6 +48,7 @@ foreach([
 	'./inc/functions.php',
 	'./inc/routes.php',
 	'./inc/mybb.php',
+	'./inc/views.php',
 ] as $file){
 	if(!file_exists($file)){
 		Fatality('File not found: ' . $file);
