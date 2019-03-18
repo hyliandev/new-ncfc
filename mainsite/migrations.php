@@ -10,11 +10,17 @@ require './mainsite/models/Event.php';
 
 /**/
 
-$event = new Event();
-$event->Set('begin_date', strtotime('2018-11-1'));
-$event->Set('end_date', strtotime('2019-11-9'));
-$event->Set('title', 'Fake 2018 NCFC');
-$event->Save();
+$brand = new Brand();
+$brand->Set('title', 'Zelda');
+$brand->Save();
+
+$brand = new Brand();
+$brand->Set('title', 'Metroid');
+$brand->Save();
+
+$brand = new Brand();
+$brand->Set('title', 'Megaman');
+$brand->Save();
 
 /**/
 

@@ -24,6 +24,20 @@ function debug(){
 	return ob_get_clean();
 }
 
+function slug($title){
+	// Only lowercase letters
+	$title = strtolower($title);
+	// Anything not alphanumerical to a dash
+	$title = preg_replace('/[^a-z0-9]/', '-', $title);
+	// More than two dashes should just be one dash
+	$title = preg_replace('/[-]{2,}/', '-', $title);
+	// If the first or last character is a dash
+	$title = preg_replace('/([-]$|^[-])/', '', $title);
+	
+	// We're done
+	return $title;
+}
+
 function urlForum(){
 	if($_SERVER['HTTP_HOST'] == 'nintendocfc.com'){
 		return 'http://forum.nintendocfc.com';

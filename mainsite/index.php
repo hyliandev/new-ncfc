@@ -42,6 +42,7 @@ function Fatality($e){
 // Some basic requries
 foreach([
 	'./models/Model.php',
+	'./models/Brand.php',
 	'./models/Event.php',
 	'./models/NewsPost.php',
 	'./models/User.php',
